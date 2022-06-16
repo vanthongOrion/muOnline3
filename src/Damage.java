@@ -21,7 +21,5 @@ public class Damage {
         };
     }
 
-    public int getDamagePoint() {
-        return damagePoint;
-    }
+
 }

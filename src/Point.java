@@ -4,28 +4,45 @@ public class Point {
     private int energy;
     private int stamina;
     private int mana;
-    private int totalPoint;
     private int remainPoint;
 
-    public Point(int totalPoint, int strength, int agility, int energy, int stamina, int mana) {
-        this.totalPoint = totalPoint;
-        this.strength = strength;
-        this.agility = agility;
-        this.energy = energy;
-        this.stamina = stamina;
-        this.mana = mana;
-        this.remainPoint = totalPoint - (strength + agility + energy + stamina + mana);
+    public Point(int level) {
+        this.remainPoint = aSignPoint(level);
     }
 
-    public Point(int totalPoint) {
-        this(totalPoint, 0, 0, 0, 0, 0);
-        this.remainPoint = totalPoint;
+    public int aSignPoint(int level){
+        if(level==1) return 100;
+        else if (level<=100) return (int) (100*level*2.5);
+        else if (level<=200) return (int) (100*level*3.9);
+        else if (level<=300) return (int) (100*level*5.1);
+        else return (int) (100*level*7.5);
+    }
+
+    public void setAllPoint(double strengthPer,double agilityPer,double energyPer,double staminaPer,double manaPer){
+        double remainPer = 1.0;
+        this.setStrength((int)(this.remainPoint * strengthPer));
+        remainPer -= strengthPer ;
+        remainPoint -= getStrength();
+        this.setAgility((int) (this.remainPoint * agilityPer));
+        remainPer -= agilityPer;
+        remainPoint -= getAgility();
+        this.setEnergy((int) (this.remainPoint * energyPer));
+        remainPer -= energyPer;
+        remainPoint -= getEnergy();
+       this.setStamina((int) (this.remainPoint * staminaPer));
+        remainPer -= staminaPer;
+        remainPoint -= getStamina();
+       this.setMana((int) (this.remainPoint * manaPer));
+        remainPer -= manaPer;
+        remainPoint -= getMana();
+
     }
 
     public boolean increaseStrength(int amount) {
         if (remainPoint < amount) return false;
         else {
             this.strength += amount;
+
             this.remainPoint -= amount;
             return true;
         }
@@ -127,6 +144,26 @@ public class Point {
 
     public int getMana() {
         return mana;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
     @Override
